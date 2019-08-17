@@ -1,11 +1,12 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-  </head>
-  <body>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
-  </body>
-</html>
+<% include ./layouts/header %>
+
+<h1>ログイン認証システム</h1>
+<div>
+	<a href="users/sign_up">アカウントを作成する</a>
+</div>
+<div>
+	<a href="users/sign_in">ログインする</a>
+</div>
+
+<% include ./layouts/footer %>
+

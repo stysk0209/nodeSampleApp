@@ -1,0 +1,14 @@
+<% include ./layouts/header %>
+
+<h1>マイページ</h1>
+<div>
+	<p>ようこそ、<%= user.name %>さん！(id:<%= user.id %>)</p>
+</div>
+<div>
+	<p>あなたのメールアドレスは、【<%= user.email %>】です。</p>
+</div>
+<div>
+	<a href="/">ホームに戻る</a>
+</div>
+
+<% include ./layouts/footer %>

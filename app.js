@@ -4,6 +4,11 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var { Client } = require('pg');
+const Sequelize = require('sequelize');
+const sequelize = new Sequelize('mydb', 'postgres', 'password', {
+  host: 'localhost',
+  dialect: 'postgres'
+});
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -29,6 +34,16 @@ app.use(function(req, res, next) {
   next(createError(404));
 });
 
+// データベース接続チェック
+sequelize
+  .authenticate()
+  .then(() => {
+    console.log('Connection has been established successfully.');
+  })
+  .catch(err => {
+    console.error('Unable to connect to the database:', err);
+  });
+
 // error handler
 app.use(function(err, req, res, next) {
   // set locals, only providing error in development
@@ -40,4 +55,5 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
+module.exports = sequelize;
 module.exports = app;
