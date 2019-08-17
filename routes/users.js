@@ -1,5 +1,7 @@
 var express = require('express');
 var router = express.Router();
+var csrf = require('csrf');
+var tokens = new csrf();
 var bcrypt = require('bcrypt');
 const saltRounds = 10; //ストレッチング回数。何回ハッシュ化を行うか定義
 const db = require('../models/index');
@@ -11,7 +13,11 @@ router.get('/', function(req, res, next) {
 
 // GET /users/sign_up
 router.get('/sign_up', (req, res, next) => {
-	res.render('sign_up');
+	let secret = tokens.secretSync();
+	let token = tokens.create(secret);
+
+	req.session._csrf = secret;
+	res.render('sign_up', {authToken: token});
 });
 
 
@@ -46,6 +52,14 @@ router.post('/authenticate', (req, res, next) => {
 
 // GET /users/create
 router.post('/create', (req, res, next) => {
+	let secret = req.session._csrf;
+	let token = req.body.authToken;
+
+	console.log(tokens.verify(secret, token));
+	if (tokens.verify(secret, token) === false) {
+		throw new Error("Invalid Token");
+	}
+
 	let password_hash = bcrypt.hashSync(req.body.password, saltRounds);
 	db.user.create({
 		name: req.body.name,
@@ -55,6 +69,7 @@ router.post('/create', (req, res, next) => {
 	})
 	.then((createUser) => {
 		console.log('\n' + createUser + '\n');
+		delete req.session._csrf;
 		res.redirect(req.baseUrl + `/${createUser.id}`);
 	})
 	.catch((err) => {

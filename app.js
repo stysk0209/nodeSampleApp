@@ -4,6 +4,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var { Client } = require('pg');
+var session = require('express-session');
 const Sequelize = require('sequelize');
 const sequelize = new Sequelize('mydb', 'postgres', 'password', {
   host: 'localhost',
@@ -14,6 +15,15 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
 var app = express();
+
+app.use(session({
+	secret: 'secret key',
+	resave: false,
+	saveUninitialized: false,
+	cookie: {
+		maxAge: 24 * 60 * 1000 //生存期間 1日
+	}
+}))
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

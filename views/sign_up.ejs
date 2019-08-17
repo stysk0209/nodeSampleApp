@@ -6,15 +6,16 @@
 	<form method="post" action="/users/create">
 		<div class="input_field">
 			<label for="user_name">名前</label><br>
-			<input type="text" name="name" id="user_name">
+			<input type="text" name="name" id="user_name" />
 		</div>
 		<div class="input_field">
 			<label for="user_name">メールアドレス</label><br>
-			<input type="text" name="email" id="user_email">
+			<input type="text" name="email" id="user_email" />
 		</div>
 		<div class="input_field">
 			<label for="user_name">パスワード</label><br>
-			<input type="text" name="password" id="user_pass">
+			<input type="text" name="password" id="user_pass" />
+			<input type="hidden" name="authToken" value= <%= authToken %> />
 		</div>
 		<div class="input_field">
 			<input type="submit" value="登録する">
