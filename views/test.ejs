@@ -1,0 +1,8 @@
+<% include ./layouts/header %>
+
+<h1>テストページ</h1>
+<p>ログインしたユーザーしかアクセスできない画面です。</p>
+<p>あなたのID：<%= userId %></p>
+<a href=<%= `/users/${userId}` %>>マイページへ戻る</a>
+
+<% include ./layouts/footer %>

@@ -1,0 +1,13 @@
+<% include ./layouts/header %>
+
+<h2>会員登録が完了しました！</h2>
+<p>2秒後、ログイン画面へ遷移します。</p>
+
+<script>
+	setTimeout(() => {
+		window.location.href = '/users/sign_in';
+	}, 2*1000);
+
+</script>
+
+<% include ./layouts/footer %>

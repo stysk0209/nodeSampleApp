@@ -2,6 +2,12 @@
 
 <h1>ユーザーアカウント作成</h1>
 
+<% if(error) { %>
+	<% for(let i = 0; i < error.length; i++) { %>
+		<p><%= error[i] %></p>
+	<% } %>
+<% } %>
+
 <div class="form">
 	<form method="post" action="/users/create">
 		<div class="input_field">
